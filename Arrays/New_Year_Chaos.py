@@ -11,19 +11,24 @@ import sys
 def minimumBribes(q):
     len_a = len(q)
     orig_state = [i for i in range(1, len_a + 1)]
+    sum_min = 0
     print(orig_state)
     print(q)
-    sum_min = 0
     for k in orig_state:
-        print(orig_state.index(k), q.index(k))
-        if q.index(k) < orig_state.index(k):
+        if q.index(k) > orig_state.index(k):
+            print(q)
             print(' number that shifts is  : ', k, 'and it shifts by  : ', abs(orig_state.index(k) - q.index(k)))
-            if orig_state.index(k) - q.index(k) > 2:
+            if abs(orig_state.index(k) - q.index(k)) == 1:
+                q[q.index(k) - 1], q[q.index(k)] = q[q.index(k)], q[q.index(k) - 1]
+            elif abs(orig_state.index(k) - q.index(k)) == 2:
+                q[q.index(k) - 2], q[q.index(k) - 1] = q[q.index(k) - 1], q[q.index(k) - 2]
+                q[q.index(k) - 1], q[q.index(k)] = q[q.index(k)], q[q.index(k) - 1]
+            elif orig_state.index(k) - q.index(k) > 2:
                 sum_min = -999999999
                 print("Too chaotic")
             else:
-                # sum_min += abs(orig_state.index(k) - q.index(k))
-                sum_min += 1
+                sum_min += abs(orig_state.index(k) - q.index(k))
+            print(q)
     if sum_min > 0:
         print('sum_min is : ', sum_min)
     elif sum_min < -999999:
